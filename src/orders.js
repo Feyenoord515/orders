@@ -28,15 +28,21 @@ export function getDateRange(fecha, fechas) {
 }
 
 export async function loginMagento() {
+  try{
   let data = JSON.stringify({ "username": "Dis_Sistemas", "password": "Sistemas01" });
   let config = {
     method: 'post',
     maxBodyLength: Infinity,
     url: 'https://mcprod.distrinando.com/rest/V1/integration/admin/token',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
+    data: data
   };
   const rsp = await axios(config);
   return rsp.data;
+}catch(e){
+  console.log(e)
+  return 'error en login magento'
+}
 }
 
 export async function fetchOrdersFromMagento(startISO, endISO, tkn) {

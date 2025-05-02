@@ -10,7 +10,13 @@ app.post('/orders', async (req, res) => {
   try {
     const { fecha, fechas, includeSap } = req.body;
     const { startISO, endISO } = getDateRange(fecha, fechas);
+    console.log('fechas', startISO)
     const tkn = await loginMagento();
+    console.log(tkn)
+    if(!tkn){
+      
+      return 'sin token'
+    }
     const items = await fetchOrdersFromMagento(startISO, endISO, tkn);
 
     if (!items || items.length === 0) {

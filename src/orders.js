@@ -4,6 +4,7 @@ import { default as pLimit } from 'p-limit';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
 const usr = process.env.MAGENTO_USERNAME;
 const pswr = process.env.MAGENTO_PASSWORD
 export function getDateRange(fecha, fechas) {
@@ -44,8 +45,7 @@ export async function loginMagento() {
     headers: { 'Content-Type': 'application/json' },
     data: data
   };
-  console.log(process.env)
-  console.log(config)
+ 
   const rsp = await axios(config);
   return rsp.data;
 }catch(e){
@@ -156,9 +156,9 @@ export async function loginSAP() {
     url: "https://10.0.0.2:50000/b1s/v2/Login",
     httpsAgent: agent,
     headers: {
-      CompanyDB: "DISTRINANDO",
-      UserName: "manager",
-      Password: "Ruta#205#"
+      CompanyDB: process.env.SAP_COMPANY,
+      UserName: process.env.SAP_USERNAME,
+      Password: process.env.SAP_PASSWORD,
     }
   };
   const response = await axios.request(config);

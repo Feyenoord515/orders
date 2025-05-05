@@ -1,7 +1,11 @@
 import https from 'https';
 import axios from 'axios';
 import { default as pLimit } from 'p-limit';
+import dotenv from 'dotenv';
 
+dotenv.config();
+const usr = process.env.MAGENTO_USERNAME;
+const pswr = process.env.MAGENTO_PASSWORD
 export function getDateRange(fecha, fechas) {
   let startISO, endISO;
   if (fecha) {
@@ -29,7 +33,10 @@ export function getDateRange(fecha, fechas) {
 
 export async function loginMagento() {
   try{
-  let data = JSON.stringify({ "username": "Dis_Sistemas", "password": "Sistemas01" });
+  let data = JSON.stringify({ 
+    "username": usr, 
+    "password": pswr 
+  });
   let config = {
     method: 'post',
     maxBodyLength: Infinity,
@@ -37,6 +44,8 @@ export async function loginMagento() {
     headers: { 'Content-Type': 'application/json' },
     data: data
   };
+  console.log(process.env)
+  console.log(config)
   const rsp = await axios(config);
   return rsp.data;
 }catch(e){
